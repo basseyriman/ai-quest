@@ -1,0 +1,936 @@
+ImageNet
+Dataset
+MRI
+Brain Scans
+MNIST
+Hand Written Digits
+Speech
+Recognition Data
+Text
+Corpus
+Satellite
+Imagery
+Customer
+Behavior Logs
+Sensor
+IoT Data
+Self-Driving
+Car Footage
+Social Media
+Posts
+E-commerce
+Data
+Weather
+Dataset
+Healthcare
+Records
+Financial
+Transactions
+Genomic
+Data
+Game
+Simulation Data
+Facial
+Recognition Data
+Chat
+Conversations
+Traffic Camera
+Data
+3D Point
+Cloud Data
+Convolutional
+Neural Network
+Transformer
+Model
+Decision Tree
+Random Forest
+Reinforcement
+Learning Agent
+Logistics
+Regression
+Support Vector
+Machine
+Naive Bayes
+Classifier
+K-Means
+Clustering
+Gradient
+Boosting
+Deep 
+Q-Learning
+Generative 
+Adversarial Network
+Autoencoder
+Graph Neural
+Network
+Bayesian
+Network
+Recurrent Neural
+Network
+LSTM 
+Model
+Linear 
+Regression
+Diffusion Model
+Hybrid AI System
+Transfer
+Learning
+Regularization
+Cloud Training
+Feature 
+Engineering
+Hyperparameter
+Tuning
+GPU
+Acceleration
+Model
+Pruning
+Synthetic Data
+Data
+Augmentation
+Continuous 
+Learning
+Edge
+Deployment
+Explainable AI
+Quantum
+Processor
+Secure Storage
+Fine-Tuning
+Overfitting
+Data Breach
+Privacy Breach
+Algorithmic Bias
+Deepfake Misuse
+Surveillance Abuse
+Data Theft
+Job Automation 
+Debate
+Fake News 
+Generation
+Ethical Oversight
+Unethical Use Case
+Data Bias Scandal
+GPU Shortage
+Funding Boost
+AI Regulation Bill
+Hackathon Win
+Data Privacy Law
+Quantum Leap
+Open AI Release
+Economic Recession
+Global AI Summit
+Data Center Fire
+Data Corruption
+Slow Training
+Model Collapse
+Server Crash
+Biased Data
+Hacker Attack
+Unlabelled Data
+Overheating GPUs
+Model Drift
+Energy Cost
+Version Conflict
+Missing Values
+Training Error
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST™
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+AI QUEST
+THE RACE TO SINGULARITY
+Boosts Image Algorithms
+Required For “Medical  AI” Algorithm
+Useful For Sample Algorithms
+Boosts NLP Algorithms
+Needed For Transformer Models
+Works Best With CNNs
+Boosts Decision Tree Accuracy
+Can Combine “With Edge AI 
+Algorithm”
+Enables “Autonomous Driving” 
+Milestone
+May Cause “Bias In Dataset” 
+Ethics Event
+Helps Build Recommendation 
+Systems
+Boosts Regression Algorithms
+Needed For “Ethical AI” MILESTONE
+Pairs With “Anomaly Detection”
+Pairs With “Bioinformatics Model”
+Supports “Reinforcement Learning”
+Adds Bonus With CNN Algorithms
+Boosts NLP Algorithms
+Helps With “Edge Detection”
+REQUIRED For “3D Vision Model”
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+CREATED BY: RIMAN BASSEY
+AI
+THE RACE TO SINGULARITY
+QUEST
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+DATASET CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+ALGORITHM CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+UPGRADE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+ETHICS CARD
+ETHICS CARD
+ETHICS CARD
+ETHICS CARD
+ETHICS CARD
+ETHICS CARD
+ETHICS CARD
+ETHICS CARD
+ETHICS CARD
+ETHICS CARD
+EVENT CARD
+EVENT CARD
+EVENT CARD
+EVENT CARD
+EVENT CARD
+EVENT CARD
+EVENT CARD
+EVENT CARD
+EVENT CARD
+EVENT CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
+CHALLENGE CARD
++10IP
++15IP
++5IP
++10IP
++10IP
++12IP
++8IP
++10IP
++14IP
++9IP
++9IP
++8IP
++12IP
++10IP
++14IP
++10IP
++10IP
++11IP
++12IP
++13IP
++15IP
++15IP
++8IP
++12IP
++10IP
++5IP
++10IP
++6IP
++9IP
++14IP
++12IP
++15IP
++10IP
++13IP
++8IP
++10IP
++12IP
++5IP
++15IP
++20IP
++15IP
++10IP
+-IP
++5IP
++10IP
++10IP
+-IP
++10IP
++XIP
++30IP
++10IP
++10IP
++30IP
+-IP
++10IP
+-10IP
+-20IP
+-15IP
+-IP
+-15IP
+-20IP
+-IP
+-10IP
+-5IP
+-IP
+-10IP
+-10IP
+-IP
++10IP
+-IP
++10IP
+-IP
++10IP
+-IP
+-10IP
+-IP
+-10IP
+-10IP
+-IP
+-15IP
+-IP
+-IP
+-15IP
+-IP
+-IP
+-5IP
+-5IP
+-IP
+-5IP
+-5-15IP
+DATA CARDS -
+20
+20
+15
+15
+10
+10
+10
+6
+UPGRADE CARDS -
+ALGORITHM CARDS -
+ETHICS CARDS -
+EVENTS CARDS -
+CHALLENGE CARDS -
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+The foundation of your AI’s learning power
+Passed the 
+Turing Test
+AI Startup Valued
+at $1B
+Solved Alzheimer’s
+Detection
+Built a Self-Driving
+Car
+Won Kaggle
+Grandmaster
+Created Ethical
+Framework
+Published in Nature
+AI Passed Bar Exam
+Achieved AGI
+Revolutionized
+Education
+Healthcare
+Diagnosis AI
+Recommendation
+Engine
+Autonomous
+Navigation System
+Climate Forecasting
+Model
+Social Media
+Moderation AI
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+AI QUEST
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+THE RACE TO SINGULARITY
+Design an AI system to detect 
+fraudulent transactions and
+usual behaior in financial
+data.
+Build an AI system to assist in
+diagnosing medical conditions
+while minimizing bias and
+protecting privacy.
+Develop an ai system to
+recommend products, content,
+and services based on user
+preference.
+Create an AI system to
+enable autonomous vehicles
+to navigate safely and 
+effectively.
+Develop an AI model to predict
+weather patterns and analyze
+climate data over time.
+Design an AI system to
+moderate online content
+and detect harmful or 
+inappropriate posts.
+MILESTONE CARD
+MILESTONE CARD
+MILESTONE CARD
+MILESTONE CARD
+MILESTONE CARD
+MILESTONE CARD
+MILESTONE CARD
+MILESTONE CARD
+MILESTONE CARD
+MILESTONE CARD
+SYSTEM OBJECTIVE
+SYSTEM OBJECTIVE
+SYSTEM OBJECTIVE
+SYSTEM OBJECTIVE
+SYSTEM OBJECTIVE
+SYSTEM OBJECTIVE
++25IP
++30IP
++30IP
++25IP
++20IP
++20IP
++20IP
++25IP
++50IP
++25IP
+MILESTONE CARDS -
+SYSTEM OBJECTIVE -
+Double IP From Image Data
+Add +15 IP To One Algorithm
+Target Loses 10 IP Unless They 
+Have “Regularization”
+Lose 20 IP Unless You Pay 
+“Secure Storage”
+Destroy 1 Data Card
+Target Loses 15 IP Unless Protected
+Everyone Skips Next Draw
+3 Algorithms +2 Upgrades
+1 Milestone + 1 Event
+MRI Data + Medical Algorithm
+2 Image Data + 1 CNN
+4 Algorithms
+1 Ethics + 1 Data + 1 Event
+1 Algorithm + 1 Data + 1 Event
+3 Text Data + Transformer
+Reached 80 IP First
+2 NLP Algorithms + 2 Data
+Everyone Gains +10 IP
+All Players Discards 1 Ethics Card
+Draw 2 Cards + 10 IP
+Stop 1 Challenge Card Globally
+All Algorithms Gains +10 IP
+Everyone Draws 1 Algorithm
+Everyone Loses 10 IP
+Each Player May Trade 1 Card
+All Players Lose 1 Data Card
+Halve IP From Decision Trees 
+For 2 Rounds
+Destroy 1 GAN Algorithm
+Target Loses 20 IP
+Steal 1 Data Card
+All Players Lose 10 IP
+Loses 5 IP But Draws 2 Cards
+Cancel 1 Ethics Card Effect
+Target Discards 1 Algorithm
+Everyone Loses 10 IP
+Target Skips Next Draw
+Remove 1 Algorithm Card
+Target Discards 2 Random Cards
+Halve IP From All Data For 2 Rounds
+Target Loses 15 IP Unless Protected
+Freeze 1 Algorithm For Two Turns
+Target Skips Their Next Upgrade
+Loses 5 IP Per Turn Until Fixed
+Lose 5 IP Per Algorithm
+Discard 1 Upgrade Card
+Lose 5 IP From Each Data Card
+Roll A Die: Lose 5-15 IP Randomly
+Cancel “Overfitting”
+Draw 1 Extra Card Next Turn
+Add +5 IP To Any Algorithm
+Add +10 IP To Any Model
+Double IP From One Algorithm 
+For 1 Turn
+Remove One Negative Challenge
+Effect
+Add +10 IP Protects Against 
+“Data Corruption”
+Copy One Data Card’s IP Value
++10 IP Per Turn For 3 Turns
+Immune To “GPU Shortage”
+Negative “Unethical Use” Ethics Card
+Triple IP For One Algorithm
+Protects All Data From Deletion
+Add +5 IP Each Turn For 2 Turns
+Double IP From TextData
+Simple But Weak To “Overfitting”
+Resistant To “Overfitting”
+Steal 5 IP From one player
+Works With Small Data
+Add +5 IP Paired With “Clean Data”
+Immune To “Slow Training”
+Randomly Group Two Data
+Ignore One Challenge Card
+Pair With “Game Simulation” Data
+Copy One Opponent’s Data Card
+Recover One Discarded Data Card
+Double IP From Connected Datasets
+Reduces Ethics Penalties By Half
+Required For “Speech AI” Milestone
+Resists “Data Corruption”
+Boosts “Weather Dataset”
+Triple IP From Image Data For 1 Turn
+Combine Two Algorithm Effects
+The “brains” that process your data
+Power-ups that boost your model
+Problems that sabotage opponents
+Social or moral dilemmas in AI
+Random Events That Affect Everyone
+Major achievements towards winning
+Major achievements towards winning
+Major achievements towards winning
+Major achievements towards winning
+Major achievements towards winning
+Major achievements towards winning
+Major achievements towards winning
+Major achievements towards winning
+Major achievements towards winning
+Major achievements towards winning
+Random Events That Affect Everyone
+Random Events That Affect Everyone
+Random Events That Affect Everyone
+Random Events That Affect Everyone
+Random Events That Affect Everyone
+Random Events That Affect Everyone
+Random Events That Affect Everyone
+Random Events That Affect Everyone
+Random Events That Affect Everyone
+Social or moral dilemmas in AI
+Social or moral dilemmas in AI
+Social or moral dilemmas in AI
+Social or moral dilemmas in AI
+Social or moral dilemmas in AI
+Social or moral dilemmas in AI
+Social or moral dilemmas in AI
+Social or moral dilemmas in AI
+Social or moral dilemmas in AI
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Problems that sabotage opponents
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+Power-ups that boost your model
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+The “brains” that process your data
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Designed by RIMANSTECH
+Fraud Detection
+System
