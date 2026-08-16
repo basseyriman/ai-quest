@@ -39,6 +39,17 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
     const [purgesRemaining, setPurgesRemaining] = useState(3);
     const [isGuideOpen, setIsGuideOpen] = useState(false);
     const [victoryDismissed, setVictoryDismissed] = useState(false);
+    const [tableScale, setTableScale] = useState(1);
+
+    useEffect(() => {
+        const updateScale = () => {
+            const width = window.innerWidth;
+            setTableScale(Math.min(Math.max(width / 1680, 0.88), 1.12));
+        };
+        updateScale();
+        window.addEventListener('resize', updateScale);
+        return () => window.removeEventListener('resize', updateScale);
+    }, []);
 
     const processedLogsCountRef = useRef<number>(0);
     const victorySoundPlayedRef = useRef(false);
@@ -499,7 +510,7 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
             {/* --- CENTER TABLE GAMEPLAY AREA --- */}
             <div
                 className="fixed top-1/2 left-1/2 flex items-start justify-center gap-6 max-w-[98vw] pointer-events-none z-20 origin-center"
-                style={{ transform: "translate(-50%, -50%) scale(clamp(0.88, calc(100vw / 1680), 1.12))" }}
+                style={{ transform: `translate(-50%, -50%) scale(${tableScale})` }}
             >
 
                 {/* SETUP: draw objective first */}

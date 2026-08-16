@@ -54,11 +54,11 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="z-20 w-full h-full min-h-screen flex flex-col items-center justify-center relative px-6"
           >
-            <div className="relative mb-16 flex flex-col items-center group w-full">
+            <div className="relative mb-4 flex flex-col items-center group w-full">
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="relative z-10 w-[85vw] max-w-[900px] flex justify-center"
+                className="relative z-10 w-[75vw] max-w-[800px] flex justify-center"
               >
                 <img
                   src="/ai_quest_logo_clean.png"
@@ -69,7 +69,7 @@ export default function Home() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-48 bg-cyan-600/20 blur-[100px] rounded-[100%] pointer-events-none transition-all duration-1000 group-hover:bg-cyan-500/40 group-hover:blur-[140px]" />
             </div>
 
-            <div className="flex flex-row items-center justify-between w-full max-w-[700px] px-4 relative z-20 mt-8">
+            <div className="flex flex-row items-center justify-between w-full max-w-[700px] px-4 relative z-20 mt-2">
               <button 
                 onClick={() => window.close()} 
                 className="group flex items-center gap-4 text-slate-400 hover:text-cyan-400 transition-colors font-mono tracking-[0.4em] uppercase text-sm sm:text-xl"

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { ChevronRight } from "lucide-react";
 
 export interface FlowStage {
@@ -163,72 +163,80 @@ export const IntroAnimatedFlow = ({
         initial="hidden"
         animate="visible"
         style={{
-          display: "flex",
-          flexDirection: "column",
+          display: "grid",
+          gridTemplateColumns: "1fr auto 1fr auto 1fr",
           gap: "14px",
           width: "100%",
-          maxWidth: "480px",
+          maxWidth: "960px",
           fontFamily: "monospace",
         }}
       >
-        {stages.map((stage) => (
-          <motion.div
-            key={stage.id}
-            variants={stepVariants}
-            style={{
-              padding: "18px 24px",
-              borderRadius: "8px",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              gap: "24px",
-              backgroundColor: "rgba(10, 10, 12, 0.75)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
-              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
-              transition: "border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "rgba(15, 15, 18, 0.9)";
-              e.currentTarget.style.borderColor = "rgba(244, 63, 94, 0.4)";
-              e.currentTarget.style.boxShadow = "0 0 20px rgba(244, 63, 94, 0.15)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "rgba(10, 10, 12, 0.75)";
-              e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.08)";
-              e.currentTarget.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
-            }}
-          >
-            <span
+        {stages.map((stage, i) => {
+          const showArrow = (i + 1) % 3 !== 0;
+          return (
+          <Fragment key={stage.id}>
+            <motion.div
+              variants={stepVariants}
               style={{
-                fontSize: "18px",
-                color: accentColor,
-                fontWeight: "bold",
-                fontFamily: "monospace",
-                width: "36px",
-                textAlign: "right",
-                flexShrink: 0,
+                padding: "18px 24px",
+                borderRadius: "8px",
+                display: "flex",
+                justifyContent: "flex-start",
+                alignItems: "center",
+                gap: "24px",
+                backgroundColor: "rgba(10, 10, 12, 0.75)",
+                border: "1px solid rgba(255, 255, 255, 0.08)",
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
+                transition: "border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(15, 15, 18, 0.9)";
+                e.currentTarget.style.borderColor = "rgba(244, 63, 94, 0.4)";
+                e.currentTarget.style.boxShadow = "0 0 20px rgba(244, 63, 94, 0.15)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(10, 10, 12, 0.75)";
+                e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.08)";
+                e.currentTarget.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.3)";
               }}
             >
-              {stage.id}.
-            </span>
-            <span style={{ color: "rgba(255,255,255,0.9)", textAlign: "left", fontSize: "16px", fontWeight: 600, letterSpacing: "0.05em" }}>
-              {stage.label}
-              {stage.suffix && (
-                <span
-                  style={{
-                    marginLeft: "12px",
-                    fontSize: "14px",
-                    color: "rgba(255,255,255,0.4)",
-                    fontFamily: "sans-serif",
-                    letterSpacing: "0.1em",
-                  }}
-                >
-                  {stage.suffix}
-                </span>
-              )}
-            </span>
-          </motion.div>
-        ))}
+              <span
+                style={{
+                  fontSize: "14px",
+                  color: accentColor,
+                  fontWeight: "bold",
+                  fontFamily: "monospace",
+                  width: "20px",
+                  textAlign: "right",
+                  flexShrink: 0,
+                }}
+              >
+                {stage.id}.
+              </span>
+              <span style={{ color: "rgba(255,255,255,0.9)", textAlign: "left", fontSize: "14px", fontWeight: 600, letterSpacing: "0.05em" }}>
+                {stage.label}
+                {stage.suffix && (
+                  <span
+                    style={{
+                      marginLeft: "12px",
+                      fontSize: "14px",
+                      color: "rgba(255,255,255,0.4)",
+                      fontFamily: "sans-serif",
+                      letterSpacing: "0.1em",
+                    }}
+                  >
+                    {stage.suffix}
+                  </span>
+                )}
+              </span>
+            </motion.div>
+            {showArrow && (
+              <motion.div variants={stepVariants} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <ChevronRight color={accentColor} size={28} style={{ opacity: 0.6 }} />
+              </motion.div>
+            )}
+          </Fragment>
+        )})}
       </motion.div>
 
       {onEnter && showEnter && (
