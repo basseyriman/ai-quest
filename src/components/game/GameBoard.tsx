@@ -322,9 +322,8 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
             {/* --- LEFT VERTICAL HUD SIDEBAR (SOLITAIRE STYLE) --- */}
             {/* --- DRAGGABLE FLOATING HUD CONSOLE (CYBERPUNK OS STYLE) --- */}
             <motion.div 
-                drag 
-                dragMomentum={false}
-                className="fixed left-6 top-[calc(50%-270px)] w-[170px] h-[540px] bg-[#02040a]/95 border border-cyan-500/25 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] z-50 flex flex-col items-center justify-between pb-4 pointer-events-auto cursor-grab active:cursor-grabbing hover:border-cyan-500/40 transition-colors select-none overflow-hidden"
+
+                className="fixed left-6 top-[calc(50%-270px)] w-[170px] h-[540px] bg-[#02040a]/95 border border-cyan-500/25 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] z-50 flex flex-col items-center justify-between pb-4 pointer-events-auto  hover:border-cyan-500/40 transition-colors select-none overflow-hidden"
             >
                 {/* SYSTEM DRAG HANDLE HEADER */}
                 <div className="w-full flex items-center justify-center gap-1.5 py-2.5 text-cyan-400/40 select-none border-b border-cyan-500/10 bg-[#050A14] rounded-t-2xl shrink-0">
@@ -445,6 +444,90 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
                 />
             </div>
 
+                        {/* --- SLEEK TOP DASHBOARD BAR --- */}
+            <div className="fixed top-0 left-0 w-full h-[64px] bg-[#02040a]/95 border-b border-cyan-500/25 shadow-[0_4px_30px_rgba(0,0,0,0.8)] z-50 grid grid-cols-3 px-6 backdrop-blur-xl pointer-events-auto select-none min-w-[700px]">
+                {/* LEFT: Branding & How to Play */}
+                <div className="flex items-center gap-6 h-full justify-start whitespace-nowrap overflow-hidden">
+                    <div className="flex items-center gap-2">
+                        <span className="text-cyan-400 font-display font-black tracking-[0.3em] uppercase text-xl drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">AI QUEST</span>
+                    </div>
+                    <button 
+                        onClick={() => setIsGuideOpen(true)}
+                        className="text-[10px] font-black tracking-[0.2em] uppercase text-black bg-cyan-400 border border-cyan-400 px-4 py-1.5 hover:bg-white hover:border-white transition-all duration-300 cursor-pointer shadow-[0_0_15px_rgba(34,211,238,0.4)] hover:shadow-[0_0_20px_rgba(255,255,255,0.6)]"
+                    >
+                        HOW TO PLAY
+                    </button>
+                </div>
+
+                {/* CENTER: Turn Status, Timer */}
+                <div className="flex items-center gap-6 h-full justify-center whitespace-nowrap overflow-hidden">
+                    <div className="flex items-center gap-3">
+                        <div className={`w-2 h-2 rounded-full shadow-[0_0_10px_currentColor] ${isActivePlayer ? "bg-cyan-400 text-cyan-400 animate-pulse" : "bg-white/20 text-white/20"}`} />
+                        <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/80">
+                            {isActivePlayer ? "YOUR TURN :" : "WAITING :"} <span className="text-cyan-400">{gameState.phase}</span>
+                        </span>
+                    </div>
+                </div>
+
+                {/* RIGHT: IP Scores */}
+                <div className="flex items-center gap-6 h-full justify-end whitespace-nowrap overflow-hidden">
+                    <div className="flex items-center gap-4 bg-[#0a1124]/40 border border-cyan-500/15 px-4 py-1.5 rounded-sm shadow-[inset_0_0_10px_rgba(34,211,238,0.1)]">
+                        <span className="text-[10px] tracking-[0.2em] uppercase text-cyan-500 font-bold">YOU</span>
+                        <span className="text-xl font-black text-cyan-300">{me ? me.ip : 0}</span>
+                    </div>
+                    {opponent && (
+                        <div className="flex items-center gap-4 bg-[#0a1124]/40 border border-red-500/15 px-4 py-1.5 rounded-sm shadow-[inset_0_0_10px_rgba(239,68,68,0.1)] opacity-70">
+                            <span className="text-[10px] tracking-[0.2em] uppercase text-red-500 font-bold">OPP</span>
+                            <span className="text-xl font-black text-red-300">{opponent.ip}</span>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* --- BOTTOM RIGHT COMMAND CLUSTER (END CYCLE & DEPLOY) --- */}
+            <div 
+                className="fixed flex items-end gap-6 z-50 pointer-events-auto select-none"
+                style={{ bottom: '24px', right: '24px' }}
+            >
+                {/* END CYCLE BUTTON */}
+                <button 
+                    onClick={endTurn} 
+                    disabled={!isActivePlayer} 
+                    className={`relative overflow-hidden w-[160px] h-[64px] flex flex-col items-center justify-center border-2 transition-all duration-300 ${
+                        isActivePlayer 
+                        ? 'bg-cyan-950/40 border-cyan-400 text-cyan-300 hover:bg-cyan-400 hover:text-black shadow-[0_0_20px_rgba(34,211,238,0.4)] hover:shadow-[0_0_30px_rgba(34,211,238,0.8)] cursor-pointer' 
+                        : 'bg-[#08080c]/80 border-[#2c2c30] text-[#71717a] cursor-not-allowed'
+                    }`}
+                    style={{ clipPath: 'polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)' }}
+                >
+                    <span className="text-[14px] font-black tracking-[0.2em] uppercase z-10">END CYCLE</span>
+                    {isActivePlayer && (
+                        <div className="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-[-20deg] animate-[shine_3s_infinite]" />
+                    )}
+                </button>
+
+                {/* DEPLOY / TROPHY ZONE */}
+                <div className="flex flex-col items-center gap-2">
+                    <motion.div
+                        animate={isHumanWinner ? { scale: [1, 1.05, 1], rotate: [0, -2, 2, 0] } : {}}
+                        transition={{ duration: 2, repeat: isHumanWinner ? Infinity : 0, repeatDelay: 1 }}
+                        className={`w-[64px] h-[64px] flex items-center justify-center bg-gradient-to-br from-[#0f172a]/90 to-[#02040a]/90 border-2 backdrop-blur-md ${
+                            isHumanWinner ? 'border-yellow-400 shadow-[0_0_30px_rgba(234,179,8,0.6)]' : 'border-yellow-500/30'
+                        }`}
+                        style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }}
+                    >
+                        <img src="/trophy.png" alt="Trophy" className={`w-[65%] h-[65%] object-cover mix-blend-screen ${isHumanWinner ? 'opacity-100' : 'opacity-70'}`} />
+                        {isHumanWinner && (
+                            <div className="absolute inset-0 bg-yellow-400/20 animate-pulse" />
+                        )}
+                    </motion.div>
+                    <div className="flex flex-col items-center text-center">
+                        <span className={`text-[9px] tracking-[0.25em] font-black uppercase leading-tight ${isHumanWinner ? 'text-yellow-300 drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]' : 'text-yellow-500/50'}`}>{isHumanWinner ? 'TROPHY' : 'DEPLOY'}</span>
+                        <span className={`text-[9px] tracking-[0.25em] font-black uppercase leading-tight ${isHumanWinner ? 'text-yellow-300 drop-shadow-[0_0_5px_rgba(250,204,21,0.8)]' : 'text-yellow-500/50'}`}>{isHumanWinner ? 'UNLOCKED' : 'TO WIN'}</span>
+                    </div>
+                </div>
+            </div>
+
             {/* --- GLOBAL PENDING PLAY CHALLENGE BAR (TOP CENTER) --- */}
             <AnimatePresence>
                 {gameState?.pendingPlay && gameState.pendingPlay.playerId !== socket?.id && (
@@ -509,7 +592,7 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
 
             {/* --- CENTER TABLE GAMEPLAY AREA --- */}
             <div
-                className="fixed top-1/2 left-1/2 flex items-start justify-center gap-6 max-w-[98vw] pointer-events-none z-20 origin-center"
+                className="fixed top-[calc(50%+32px)] left-1/2 flex items-start justify-center gap-4 max-w-[98vw] pointer-events-none z-20 origin-center"
                 style={{ transform: `translate(-50%, -50%) scale(${tableScale})` }}
             >
 
@@ -529,9 +612,8 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
                 
                 {/* 1. ACTIVE OBJECTIVE DECK (LEFT) */}
                 <motion.div 
-                    drag 
-                    dragMomentum={false}
-                    className="relative w-[310px] h-[560px] pointer-events-auto transition-all duration-500 cursor-grab active:cursor-grabbing"
+
+                    className="relative w-[310px] h-[560px] pointer-events-auto transition-all duration-500 "
                 >
                     {/* Title cleanly above (Hardcoded position) */}
                     <div className="absolute top-0 left-0 w-full flex items-center justify-center gap-2 select-none">
@@ -657,9 +739,8 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
 
                 {/* 2. MILESTONE DECK (LEFT-CENTER) — locked until Deployment */}
                 <motion.div
-                    drag
-                    dragMomentum={false}
-                    className="relative w-[310px] h-[560px] pointer-events-auto cursor-grab active:cursor-grabbing"
+
+                    className="relative w-[310px] h-[560px] pointer-events-auto "
                 >
                     <div className="absolute top-0 left-0 w-full flex items-center justify-center gap-2 select-none">
                         <GripVertical size={14} className="text-yellow-500/50" />
@@ -736,9 +817,8 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
 
                 {/* 3. CENTER TABLEAU (SHARED PIPELINE CASCADE) */}
                 <motion.div 
-                    drag 
-                    dragMomentum={false}
-                    className="relative w-[280px] h-[392px] pointer-events-auto cursor-grab active:cursor-grabbing" 
+
+                    className="relative w-[280px] h-[392px] pointer-events-auto " 
                     style={{ marginTop: '56px' }}
                 >
                     {(() => {
@@ -759,7 +839,7 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
                         }
                         const N_pipeline = pipelineCards.length;
                         // Squeeze vertical spacing step dynamically from 60px down to 32px
-                        const yOffsetStep = N_pipeline > 6 ? 32 : (N_pipeline > 4 ? 44 : 60);
+                        const yOffsetStep = 2;
                         // Scale cards down slightly to 85% as the pipeline grows beyond 5 cards
                         const cardScale = N_pipeline > 5 ? 0.85 : 1.0;
                         
@@ -837,9 +917,8 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
                             style={{ top: '-220px', left: '50%', transform: 'translateX(-50%)', width: 'max-content', zIndex: 50 }}
                         >
                             <motion.div 
-                                drag
-                                dragMomentum={false}
-                                className="flex items-center gap-6 pointer-events-auto cursor-grab active:cursor-grabbing"
+
+                                className="flex items-center gap-6 pointer-events-auto "
                             >
                                 <div className="flex flex-col gap-2 shrink-0 select-none items-center">
                                     {/* Grip Icon & Label */}
@@ -885,9 +964,8 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
                         style={{ bottom: '-210px', left: '50%', transform: 'translateX(-50%)', width: 'max-content', zIndex: 40 }}
                     >
                         <motion.div 
-                            drag
-                            dragMomentum={false}
-                            className="flex items-center gap-6 pointer-events-auto cursor-grab active:cursor-grabbing"
+
+                            className="flex items-center gap-6 pointer-events-auto "
                         >
                             <div className="flex flex-col gap-2 shrink-0 select-none items-center">
                                 {/* Grip Icon & Label */}
@@ -951,9 +1029,8 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
 
                 {/* 3. MAIN DECK (RIGHT) */}
                 <motion.div 
-                    drag 
-                    dragMomentum={false}
-                    className="relative w-[310px] h-[560px] pointer-events-auto transition-all duration-500 cursor-grab active:cursor-grabbing"
+
+                    className="relative w-[310px] h-[560px] pointer-events-auto transition-all duration-500 "
                 >
                     {/* Title cleanly above (Hardcoded position) */}
                     <div className="absolute top-0 left-0 w-full flex items-center justify-center gap-2 select-none">
@@ -1074,9 +1151,8 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
 
                 {/* 4. SCIENCE THREAD TIMELINE (RIGHT COLUMN) */}
                 <motion.div 
-                    drag 
-                    dragMomentum={false}
-                    className="relative w-[310px] h-[560px] bg-[#02040a]/75 backdrop-blur-3xl border border-cyan-500/25 rounded-2xl flex flex-col pointer-events-auto z-30 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-500 cursor-grab active:cursor-grabbing"
+
+                    className="relative w-[310px] h-[560px] bg-[#02040a]/75 backdrop-blur-3xl border border-cyan-500/25 rounded-2xl flex flex-col pointer-events-auto z-30 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-500 "
                     style={{ padding: '24px' }}
                 >
                     <div className="border-b border-cyan-500/30 pb-4 mb-4 flex items-center justify-between shrink-0 gap-2 select-none">
@@ -1359,3 +1435,4 @@ export const GameBoard = ({ socket, roomId, playerName }: GameBoardProps) => {
          </div>
      );
  };
+

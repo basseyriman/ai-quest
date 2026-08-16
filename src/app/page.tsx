@@ -24,7 +24,7 @@ const playInitializeSound = () => {
 export default function Home() {
   const { socket, isConnected } = useSocket();
   const [inGame, setInGame] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(false);
   const [introLeadsToLobby, setIntroLeadsToLobby] = useState(false);
   const [showLobby, setShowLobby] = useState(false);
   const [playerName, setPlayerName] = useState("");
@@ -85,8 +85,7 @@ export default function Home() {
 
               <button 
                 onClick={() => {
-                  setIntroLeadsToLobby(true);
-                  setShowIntro(true);
+                  setShowLobby(true);
                   playInitializeSound();
                 }} 
                 className="group flex items-center gap-4 text-cyan-100 hover:text-white transition-colors font-mono font-bold tracking-[0.4em] uppercase text-sm sm:text-xl drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]"
