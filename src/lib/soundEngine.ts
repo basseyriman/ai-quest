@@ -1,17 +1,36 @@
 "use client";
 
 /**
- * AI QUEST — Neural Command Audio Engine
- * Studio-grade Web Audio API Synthesizer for:
- * 1. "NEURAL COMMAND" Ambient Sci-Fi Strategy Soundtrack (Cyber-Orchestral Pads + Arpeggiator + Deep Sub)
- * 2. Tactical Card & Pipeline Sound Effects (SFX)
+ * AI QUEST — Neural Command Audio Engine (Mobile + Desktop Optimized)
+ * - Uses HTML5 <audio> silent WAV prime + WebAudio buffer unlock so iOS Safari
+ *   (even with the physical Ringer/Silent switch muted) and Android Chrome
+ *   play audio reliably.
+ * - Tuned mid-range harmonics and gain levels so phone speakers project
+ *   both the "Neural Command" soundtrack and tactical card SFX clearly.
  */
+
+// 40ms silent PCM WAV data URI used to switch iOS AudioSession from "ambient" to "playback"
+const SILENT_WAV_DATA_URI =
+  "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
 
 class AiQuestSoundEngine {
   private ctx: AudioContext | null = null;
   private isMusicPlaying = false;
   private musicTimer: ReturnType<typeof setInterval> | null = null;
   private stepIndex = 0;
+  private unlocked = false;
+  private htmlAudioPrimer: HTMLAudioElement | null = null;
+
+  constructor() {
+    if (typeof window !== "undefined") {
+      const unlockHandler = () => {
+        this.unlockMobileAudio();
+      };
+      window.addEventListener("touchstart", unlockHandler, { passive: true, once: true });
+      window.addEventListener("touchend", unlockHandler, { passive: true, once: true });
+      window.addEventListener("click", unlockHandler, { passive: true, once: true });
+    }
+  }
 
   private getContext(): AudioContext | null {
     if (typeof window === "undefined") return null;
@@ -24,34 +43,95 @@ class AiQuestSoundEngine {
         this.ctx = new AudioCtx();
       }
     }
-    if (this.ctx && this.ctx.state === "suspended") {
-      this.ctx.resume().catch(() => {});
-    }
     return this.ctx;
   }
 
   /**
+   * Unlocks Web Audio on iOS Safari & Android Chrome inside a direct user tap/click gesture.
+   */
+  public unlockMobileAudio(): AudioContext | null {
+    const ctx = this.getContext();
+    if (!ctx) return null;
+
+    // 1. iOS 17+ AudioSession API (bypasses hardware silent switch when supported)
+    try {
+      const nav = navigator as unknown as {
+        audioSession?: { type: string };
+      };
+      if (nav.audioSession) {
+        nav.audioSession.type = "playback";
+      }
+    } catch {
+      // Ignore if unsupported
+    }
+
+    // 2. Play tiny silent HTML5 <audio> element to force mobile media playback channel
+    try {
+      if (!this.htmlAudioPrimer) {
+        this.htmlAudioPrimer = new Audio(SILENT_WAV_DATA_URI);
+        this.htmlAudioPrimer.volume = 0.01;
+      }
+      this.htmlAudioPrimer.play().catch(() => {});
+    } catch {
+      // Ignore
+    }
+
+    // 3. Resume AudioContext and play a 1-frame buffer to unlock iOS WebKit
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => {});
+    }
+
+    if (!this.unlocked) {
+      try {
+        const buffer = ctx.createBuffer(1, 1, 22050);
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(ctx.destination);
+        source.start(0);
+        this.unlocked = true;
+      } catch {
+        // Ignore
+      }
+    }
+
+    return ctx;
+  }
+
+  /**
    * Starts the "Neural Command" ambient sci-fi strategy soundtrack.
-   * D-Minor / Bb-Major7 / Gm9 / A7sus4 progression inspired by Tron: Legacy & Stellaris.
+   * Voiced with rich mid-range harmonics so both phone speakers and desktop speakers sound full.
    */
   public startMusic() {
     if (this.isMusicPlaying) return;
-    const ctx = this.getContext();
+    const ctx = this.unlockMobileAudio();
     if (!ctx) return;
 
     this.isMusicPlaying = true;
     this.stepIndex = 0;
 
-    // 4-chord progression (each chord lasts 8 steps of 450ms = 3.6s per bar)
+    // 4-chord progression (Dm9 -> Bbmaj7 -> Gm9 -> Asus4/A7)
+    // Bass notes include 2nd harmonic (110Hz-220Hz range) so phone speakers reproduce the bassline clearly
     const chords = [
-      // Dm9: D2 sub, A3, C4, E4, F4
-      { bass: 73.42, pad: [220.0, 261.63, 329.63, 349.23], arp: [293.66, 349.23, 440.0, 523.25, 659.25, 523.25, 440.0, 349.23] },
-      // Bbmaj7(#11): Bb1 sub, A3, C4, D4, F4
-      { bass: 58.27, pad: [220.0, 261.63, 293.66, 349.23], arp: [233.08, 349.23, 440.0, 523.25, 587.33, 523.25, 440.0, 349.23] },
-      // Gm9: G1 sub, Bb3, D4, F4, A4
-      { bass: 49.0, pad: [233.08, 293.66, 349.23, 440.0], arp: [196.0, 293.66, 349.23, 440.0, 587.33, 440.0, 349.23, 293.66] },
-      // Asus4 -> A7: A1 sub, A3, D4, E4, G4
-      { bass: 55.0, pad: [220.0, 293.66, 329.63, 392.0], arp: [220.0, 329.63, 392.0, 440.0, 659.25, 587.33, 440.0, 329.63] },
+      {
+        bass: 146.83, // D3
+        pad: [293.66, 349.23, 440.0, 523.25],
+        arp: [293.66, 349.23, 440.0, 523.25, 659.25, 523.25, 440.0, 349.23],
+      },
+      {
+        bass: 116.54, // Bb2
+        pad: [233.08, 293.66, 349.23, 440.0],
+        arp: [233.08, 349.23, 440.0, 523.25, 587.33, 523.25, 440.0, 349.23],
+      },
+      {
+        bass: 196.0, // G3
+        pad: [233.08, 293.66, 392.0, 440.0],
+        arp: [196.0, 293.66, 349.23, 440.0, 587.33, 440.0, 349.23, 293.66],
+      },
+      {
+        bass: 110.0, // A2
+        pad: [220.0, 293.66, 329.63, 392.0],
+        arp: [220.0, 329.63, 392.0, 440.0, 659.25, 587.33, 440.0, 329.63],
+      },
     ];
 
     const triggerStep = () => {
@@ -59,28 +139,50 @@ class AiQuestSoundEngine {
       const audio = this.getContext();
       if (!audio) return;
 
+      if (audio.state === "suspended") {
+        audio.resume().catch(() => {});
+      }
+
       const chordIdx = Math.floor(this.stepIndex / 8) % chords.length;
       const beatInBar = this.stepIndex % 8;
       const currentChord = chords[chordIdx];
-      const now = audio.currentTime;
+      const now = audio.currentTime + 0.02;
 
-      // 1. On Beat 0 of each bar: Warm lush analog pad + deep sub bass swell
+      // 1. On Beat 0 of each bar: Warm analog synth pad + audible mid-bass pulse
       if (beatInBar === 0) {
-        this.playAmbientPad(audio, currentChord.pad, 3.8, now);
-        this.playDeepSubBass(audio, currentChord.bass, 3.6, now);
+        this.playAmbientPad(audio, currentChord.pad, 3.6, now);
+        this.playDeepSubBass(audio, currentChord.bass, 3.4, now);
       }
 
-      // 2. Subtle crystalline neural pulse arpeggio on every step
+      // 2. Crystalline neural pulse arpeggio on every step (audibly balanced for phone speakers)
       const arpFreq = currentChord.arp[beatInBar];
       if (arpFreq) {
-        this.playNeuralArpNote(audio, arpFreq, now, beatInBar % 2 === 0 ? 0.022 : 0.014);
+        this.playNeuralArpNote(
+          audio,
+          arpFreq,
+          now,
+          beatInBar % 2 === 0 ? 0.09 : 0.06
+        );
       }
 
       this.stepIndex++;
     };
 
-    triggerStep();
-    this.musicTimer = setInterval(triggerStep, 450);
+    // Play an immediate confirmation chord + start loop after context resumes
+    if (ctx.state === "suspended") {
+      ctx
+        .resume()
+        .then(() => {
+          triggerStep();
+        })
+        .catch(() => {
+          triggerStep();
+        });
+    } else {
+      triggerStep();
+    }
+
+    this.musicTimer = setInterval(triggerStep, 430);
   }
 
   public stopMusic() {
@@ -103,14 +205,14 @@ class AiQuestSoundEngine {
   ) {
     const filter = ctx.createBiquadFilter();
     filter.type = "lowpass";
-    filter.frequency.setValueAtTime(650, startTime);
-    filter.frequency.linearRampToValueAtTime(1100, startTime + duration * 0.5);
-    filter.frequency.linearRampToValueAtTime(550, startTime + duration);
+    filter.frequency.setValueAtTime(900, startTime);
+    filter.frequency.linearRampToValueAtTime(1600, startTime + duration * 0.5);
+    filter.frequency.linearRampToValueAtTime(800, startTime + duration);
 
     const masterGain = ctx.createGain();
     masterGain.gain.setValueAtTime(0.001, startTime);
-    masterGain.gain.linearRampToValueAtTime(0.028, startTime + 1.1);
-    masterGain.gain.setValueAtTime(0.028, startTime + duration - 1.2);
+    masterGain.gain.linearRampToValueAtTime(0.075, startTime + 0.8);
+    masterGain.gain.setValueAtTime(0.075, startTime + duration - 0.9);
     masterGain.gain.linearRampToValueAtTime(0.0001, startTime + duration);
 
     filter.connect(masterGain);
@@ -118,9 +220,8 @@ class AiQuestSoundEngine {
 
     freqs.forEach((f, idx) => {
       const osc = ctx.createOscillator();
-      osc.type = idx % 2 === 0 ? "sine" : "triangle";
-      // Slight detune for lush stereo-like chorus warmth
-      osc.detune.setValueAtTime(idx % 2 === 0 ? -4 : 4, startTime);
+      osc.type = idx % 2 === 0 ? "triangle" : "sine";
+      osc.detune.setValueAtTime(idx % 2 === 0 ? -5 : 5, startTime);
       osc.frequency.setValueAtTime(f, startTime);
       osc.connect(filter);
       osc.start(startTime);
@@ -142,10 +243,10 @@ class AiQuestSoundEngine {
     osc.frequency.setValueAtTime(freq, startTime);
 
     filter.type = "lowpass";
-    filter.frequency.setValueAtTime(160, startTime);
+    filter.frequency.setValueAtTime(420, startTime);
 
     gain.gain.setValueAtTime(0.001, startTime);
-    gain.gain.linearRampToValueAtTime(0.045, startTime + 0.4);
+    gain.gain.linearRampToValueAtTime(0.095, startTime + 0.25);
     gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
 
     osc.connect(filter);
@@ -165,22 +266,22 @@ class AiQuestSoundEngine {
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
-    osc.type = "sine";
+    osc.type = "triangle";
     osc.frequency.setValueAtTime(freq, startTime);
 
     gain.gain.setValueAtTime(0.0001, startTime);
-    gain.gain.linearRampToValueAtTime(peakGain, startTime + 0.03);
-    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.42);
+    gain.gain.linearRampToValueAtTime(peakGain, startTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.38);
 
     osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(startTime);
-    osc.stop(startTime + 0.44);
+    osc.stop(startTime + 0.4);
   }
 
   /**
-   * Rich Tactical Sound Effects (SFX)
+   * Rich Tactical Sound Effects (SFX) — Boosted for mobile speaker clarity
    */
   public playSfx(
     type:
@@ -194,76 +295,80 @@ class AiQuestSoundEngine {
       | "victory"
       | "click"
   ) {
-    const ctx = this.getContext();
+    const ctx = this.unlockMobileAudio();
     if (!ctx) return;
-    const now = ctx.currentTime;
 
-    switch (type) {
-      case "click": {
-        this.triggerNote(ctx, 660, "sine", now, 0.08, 0.04);
-        break;
+    const executeSfx = () => {
+      const now = ctx.currentTime + 0.01;
+
+      switch (type) {
+        case "click": {
+          this.triggerNote(ctx, 660, "triangle", now, 0.09, 0.14);
+          break;
+        }
+        case "draw": {
+          this.triggerNote(ctx, 440, "triangle", now, 0.12, 0.16);
+          this.triggerNote(ctx, 659.25, "triangle", now + 0.055, 0.16, 0.16);
+          break;
+        }
+        case "deal": {
+          [392.0, 523.25, 659.25].forEach((f, i) => {
+            this.triggerNote(ctx, f, "triangle", now + i * 0.06, 0.14, 0.15);
+          });
+          break;
+        }
+        case "valid_play": {
+          this.triggerNote(ctx, 523.25, "triangle", now, 0.18, 0.18);
+          this.triggerNote(ctx, 659.25, "triangle", now + 0.06, 0.22, 0.18);
+          this.triggerNote(ctx, 783.99, "triangle", now + 0.12, 0.3, 0.16);
+          break;
+        }
+        case "stage_advance": {
+          [440.0, 554.37, 659.25, 880.0].forEach((f, i) => {
+            this.triggerNote(ctx, f, "triangle", now + i * 0.06, 0.3, 0.18);
+          });
+          break;
+        }
+        case "challenge_alert": {
+          this.triggerNote(ctx, 587.33, "sawtooth", now, 0.14, 0.15);
+          this.triggerNote(ctx, 440.0, "sawtooth", now + 0.14, 0.2, 0.15);
+          break;
+        }
+        case "challenge_win": {
+          [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+            this.triggerNote(ctx, f, "triangle", now + i * 0.055, 0.28, 0.2);
+          });
+          break;
+        }
+        case "challenge_fail": {
+          this.triggerNote(ctx, 246.94, "sawtooth", now, 0.18, 0.18);
+          this.triggerNote(ctx, 174.61, "sawtooth", now + 0.15, 0.3, 0.18);
+          break;
+        }
+        case "victory": {
+          const fanfare = [
+            { f: 523.25, t: 0.0, d: 0.2 },
+            { f: 659.25, t: 0.12, d: 0.2 },
+            { f: 783.99, t: 0.24, d: 0.25 },
+            { f: 1046.5, t: 0.38, d: 0.65 },
+            { f: 783.99, t: 0.38, d: 0.65 },
+            { f: 523.25, t: 0.38, d: 0.65 },
+          ];
+          fanfare.forEach((n) => {
+            this.triggerNote(ctx, n.f, "triangle", now + n.t, n.d, 0.18);
+          });
+          break;
+        }
       }
-      case "draw": {
-        // Crisp futuristic card draw shimmer
-        this.triggerNote(ctx, 440, "triangle", now, 0.1, 0.045);
-        this.triggerNote(ctx, 659.25, "sine", now + 0.05, 0.14, 0.045);
-        break;
-      }
-      case "deal": {
-        // Cascade of 3 quick cyber-cards dealing
-        [392.0, 523.25, 659.25].forEach((f, i) => {
-          this.triggerNote(ctx, f, "triangle", now + i * 0.055, 0.12, 0.045);
-        });
-        break;
-      }
-      case "valid_play": {
-        // Harmonious cyan pipeline node lock-in (D-minor add9 upward chime)
-        this.triggerNote(ctx, 523.25, "sine", now, 0.18, 0.06);
-        this.triggerNote(ctx, 659.25, "sine", now + 0.06, 0.22, 0.06);
-        this.triggerNote(ctx, 783.99, "triangle", now + 0.12, 0.28, 0.05);
-        break;
-      }
-      case "stage_advance": {
-        // Rising 4-note stage unlock power-up chord
-        [440.0, 554.37, 659.25, 880.0].forEach((f, i) => {
-          this.triggerNote(ctx, f, "triangle", now + i * 0.06, 0.28, 0.065);
-        });
-        break;
-      }
-      case "challenge_alert": {
-        // Two-tone tactical peer-audit sonar warning
-        this.triggerNote(ctx, 587.33, "sawtooth", now, 0.12, 0.045);
-        this.triggerNote(ctx, 440.0, "sawtooth", now + 0.13, 0.18, 0.045);
-        break;
-      }
-      case "challenge_win": {
-        // High-energy audit catch triumph chord
-        [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
-          this.triggerNote(ctx, f, "triangle", now + i * 0.05, 0.26, 0.07);
-        });
-        break;
-      }
-      case "challenge_fail": {
-        // Rejected card / penalty power-down buzz
-        this.triggerNote(ctx, 220.0, "sawtooth", now, 0.18, 0.06);
-        this.triggerNote(ctx, 146.83, "sawtooth", now + 0.14, 0.28, 0.06);
-        break;
-      }
-      case "victory": {
-        // Grand Stage 7 Deployment + Milestone Unlocked Fanfare
-        const fanfare = [
-          { f: 523.25, t: 0.0, d: 0.2 },
-          { f: 659.25, t: 0.12, d: 0.2 },
-          { f: 783.99, t: 0.24, d: 0.25 },
-          { f: 1046.5, t: 0.38, d: 0.65 },
-          { f: 783.99, t: 0.38, d: 0.65 },
-          { f: 523.25, t: 0.38, d: 0.65 },
-        ];
-        fanfare.forEach((n) => {
-          this.triggerNote(ctx, n.f, "triangle", now + n.t, n.d, 0.07);
-        });
-        break;
-      }
+    };
+
+    if (ctx.state === "suspended") {
+      ctx
+        .resume()
+        .then(executeSfx)
+        .catch(executeSfx);
+    } else {
+      executeSfx();
     }
   }
 

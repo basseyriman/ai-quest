@@ -151,10 +151,14 @@ export function OnlineManualGameArena() {
       soundEngine.stopMusic();
       setMusicEnabled(false);
     } else {
+      if (!soundEnabled) {
+        setSoundEnabled(true);
+      }
       soundEngine.startMusic();
+      soundEngine.playSfx("valid_play");
       setMusicEnabled(true);
     }
-  }, [musicEnabled]);
+  }, [musicEnabled, soundEnabled]);
 
   const toggleSound = useCallback(() => {
     const next = !soundEnabled;
