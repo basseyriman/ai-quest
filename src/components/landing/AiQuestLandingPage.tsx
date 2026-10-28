@@ -223,16 +223,16 @@ export function AiQuestLandingPage() {
           ===================================================================== */}
           <section id="play-arena" className="relative">
             {/* Exact Roll-Up Banner Header Hierarchy (Matches verify_top.png 1:1) */}
-            <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-10">
+            <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-4 lg:mb-10">
               {/* 1. Presenter Line */}
-              <p className="text-xs sm:text-sm md:text-base font-bold tracking-[0.16em] text-[#94a3b8] uppercase mb-5">
+              <p className="text-[10px] sm:text-sm md:text-base font-bold tracking-[0.16em] text-[#94a3b8] uppercase mb-2 sm:mb-5">
                 RIMANSTECH INDUSTRIES PRESENTS
               </p>
 
               {/* 2. Official AI QUEST Shield Emblem with Smooth Radial Spotlight */}
-              <div className="relative flex items-center justify-center my-1">
+              <div className="relative flex items-center justify-center my-0.5 sm:my-1">
                 <div
-                  className="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full pointer-events-none"
+                  className="absolute w-44 h-44 sm:w-96 sm:h-96 rounded-full pointer-events-none"
                   style={{
                     background:
                       "radial-gradient(circle, rgba(14,165,233,0.22) 0%, rgba(14,165,233,0.08) 45%, rgba(3,7,18,0) 72%)",
@@ -241,26 +241,26 @@ export function AiQuestLandingPage() {
                 <img
                   src="/logo.png"
                   alt="AI Quest: Build. Train. Deploy."
-                  className="relative z-10 w-44 sm:w-56 md:w-64 h-auto object-contain drop-shadow-[0_18px_38px_rgba(0,0,0,0.85)]"
+                  className="relative z-10 w-24 sm:w-56 md:w-64 h-auto object-contain drop-shadow-[0_18px_38px_rgba(0,0,0,0.85)]"
                 />
               </div>
 
               {/* 3. Category Title (Single Clean Line in Sky Blue #38bdf8, Generous Gap Below Shield Tip) */}
-              <h1 className="mt-7 sm:mt-8 text-base sm:text-2xl md:text-[28px] font-bold tracking-[0.06em] uppercase text-[#38bdf8] leading-snug">
+              <h1 className="mt-2.5 sm:mt-8 text-xs sm:text-2xl md:text-[28px] font-bold tracking-[0.06em] uppercase text-[#38bdf8] leading-snug">
                 THE MACHINE LEARNING STRATEGY CARD GAME
               </h1>
 
               {/* 4. Glowing Cyan Tagline Pill: BUILD · TRAIN · DEPLOY */}
-              <div className="mt-5 inline-flex items-center justify-center px-8 sm:px-12 py-2.5 sm:py-3 rounded-full bg-[#0a1e44] border-2 border-[#22d3ee] shadow-[0_0_25px_rgba(34,211,238,0.28)]">
-                <span className="text-sm sm:text-lg md:text-xl font-bold tracking-[0.14em] uppercase text-white">
+              <div className="mt-2 sm:mt-5 inline-flex items-center justify-center px-5 sm:px-12 py-1.5 sm:py-3 rounded-full bg-[#0a1e44] border-2 border-[#22d3ee] shadow-[0_0_25px_rgba(34,211,238,0.28)]">
+                <span className="text-[11px] sm:text-lg md:text-xl font-bold tracking-[0.14em] uppercase text-white">
                   BUILD &nbsp;&middot;&nbsp; TRAIN &nbsp;&middot;&nbsp; DEPLOY
                 </span>
               </div>
 
               {/* 5. Signature Cyan Divider Line with Center Node */}
-              <div className="mt-7 flex items-center justify-center w-full max-w-md">
+              <div className="mt-3 sm:mt-7 flex items-center justify-center w-full max-w-md">
                 <div className="flex-1 h-[2px] bg-[#0ea5e9]/70" />
-                <div className="w-2.5 h-2.5 rounded-full bg-[#22d3ee] shadow-[0_0_10px_#22d3ee] mx-0" />
+                <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-[#22d3ee] shadow-[0_0_10px_#22d3ee] mx-0" />
                 <div className="flex-1 h-[2px] bg-[#0ea5e9]/70" />
               </div>
             </div>
@@ -286,66 +286,42 @@ export function AiQuestLandingPage() {
                   }}
                 />
 
-                {/* Desktop Fanned Cards + Center 3D Box Composition */}
-                <div className="relative z-10 flex flex-col lg:flex-row items-center justify-center w-full">
+                {/* Fanned Cards + Center 3D Box Composition (Unified Mobile & Desktop) */}
+                <div className="relative z-10 flex flex-row items-center justify-center w-full overflow-hidden py-2">
                   {/* Left 2 Fanned Cards */}
-                  <div className="hidden sm:flex items-center justify-center relative lg:-mr-12 z-10">
+                  <div className="flex items-center justify-center relative -mr-8 sm:-mr-10 lg:-mr-12 z-10">
                     <img
                       src="/official_cards/extracted/official_card_prep_class_balancing.png"
                       alt="Class Balancing — Data Preparation Card"
-                      className="w-40 md:w-48 xl:w-52 rounded-2xl shadow-[0_22px_50px_rgba(0,0,0,0.88)] -rotate-[14deg] translate-x-10 translate-y-3 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300"
+                      className="w-20 sm:w-40 md:w-48 xl:w-52 rounded-lg sm:rounded-2xl shadow-[0_14px_32px_rgba(0,0,0,0.88)] sm:shadow-[0_22px_50px_rgba(0,0,0,0.88)] -rotate-[14deg] translate-x-5 sm:translate-x-10 translate-y-2 sm:translate-y-3 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300"
                     />
                     <img
                       src="/official_cards/extracted/official_card_data_camera.png"
                       alt="Camera Image Dataset — Data Collection Card"
-                      className="w-44 md:w-56 xl:w-60 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.92)] -rotate-[6deg] hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300"
+                      className="w-24 sm:w-44 md:w-56 xl:w-60 rounded-lg sm:rounded-2xl shadow-[0_16px_38px_rgba(0,0,0,0.92)] sm:shadow-[0_25px_60px_rgba(0,0,0,0.92)] -rotate-[6deg] hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300"
                     />
                   </div>
 
                   {/* Center 3D Collector's Box */}
-                  <div className="relative z-20 flex flex-col items-center mx-2">
+                  <div className="relative z-20 flex flex-col items-center mx-1 sm:mx-2 shrink-0">
                     <img
                       src="/ai_quest_box_3d.png?v=2"
                       alt="AI Quest Engineer Edition 3D Box"
-                      className="w-64 sm:w-80 md:w-[360px] xl:w-[390px] h-auto drop-shadow-[0_28px_65px_rgba(0,0,0,0.92)] hover:scale-[1.02] transition-transform duration-500"
+                      className="w-36 sm:w-80 md:w-[360px] xl:w-[390px] h-auto drop-shadow-[0_20px_45px_rgba(0,0,0,0.92)] sm:drop-shadow-[0_28px_65px_rgba(0,0,0,0.92)] hover:scale-[1.02] transition-transform duration-500"
                     />
                   </div>
 
                   {/* Right 2 Fanned Cards */}
-                  <div className="hidden sm:flex items-center justify-center relative lg:-ml-12 z-10">
+                  <div className="flex items-center justify-center relative -ml-8 sm:-ml-10 lg:-ml-12 z-10">
                     <img
                       src="/official_cards/extracted/official_card_objective_healthcare.png"
                       alt="Healthcare Diagnosis AI — System Objective Card"
-                      className="w-44 md:w-56 xl:w-60 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.92)] rotate-[6deg] hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300"
+                      className="w-24 sm:w-44 md:w-56 xl:w-60 rounded-lg sm:rounded-2xl shadow-[0_16px_38px_rgba(0,0,0,0.92)] sm:shadow-[0_25px_60px_rgba(0,0,0,0.92)] rotate-[6deg] hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300"
                     />
                     <img
                       src="/official_cards/extracted/official_card_deploy_aws.png"
                       alt="AWS Deployment — Deployment Card"
-                      className="w-40 md:w-48 xl:w-52 rounded-2xl shadow-[0_22px_50px_rgba(0,0,0,0.88)] rotate-[14deg] -translate-x-10 translate-y-3 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300"
-                    />
-                  </div>
-
-                  {/* Mobile 4-Card Grid */}
-                  <div className="grid grid-cols-2 gap-3 sm:hidden w-full max-w-sm mt-6">
-                    <img
-                      src="/official_cards/extracted/official_card_data_camera.png"
-                      alt="Camera Image Dataset"
-                      className="w-full rounded-xl shadow-lg"
-                    />
-                    <img
-                      src="/official_cards/extracted/official_card_objective_healthcare.png"
-                      alt="Healthcare Diagnosis AI"
-                      className="w-full rounded-xl shadow-lg"
-                    />
-                    <img
-                      src="/official_cards/extracted/official_card_prep_class_balancing.png"
-                      alt="Class Balancing"
-                      className="w-full rounded-xl shadow-lg"
-                    />
-                    <img
-                      src="/official_cards/extracted/official_card_deploy_aws.png"
-                      alt="AWS Deployment"
-                      className="w-full rounded-xl shadow-lg"
+                      className="w-20 sm:w-40 md:w-48 xl:w-52 rounded-lg sm:rounded-2xl shadow-[0_14px_32px_rgba(0,0,0,0.88)] sm:shadow-[0_22px_50px_rgba(0,0,0,0.88)] rotate-[14deg] -translate-x-5 sm:-translate-x-10 translate-y-2 sm:translate-y-3 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300"
                     />
                   </div>
                 </div>

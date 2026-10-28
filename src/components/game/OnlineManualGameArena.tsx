@@ -100,6 +100,10 @@ export function OnlineManualGameArena() {
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [musicEnabled, setMusicEnabled] = useState<boolean>(false);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [mobileSettingsOpen, setMobileSettingsOpen] = useState<boolean>(false);
+  const [mobileShowCompat, setMobileShowCompat] = useState<boolean>(false);
+
+  const mobileStageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Core game state
   const [players, setPlayers] = useState<ArenaPlayer[]>([]);
@@ -982,6 +986,15 @@ export function OnlineManualGameArena() {
   const validHandCount =
     humanPlayer?.hand.filter((c) => isValidPipelinePlay(c, pipeline)).length || 0;
 
+  // Auto-scroll mobile pipeline track to the active stage when it advances
+  useEffect(() => {
+    const targetIdx = headStageIdx === -1 ? 0 : headStageIdx;
+    const el = mobileStageRefs.current[targetIdx];
+    if (el && typeof window !== "undefined" && window.innerWidth < 1024) {
+      el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  }, [headStageIdx]);
+
   return (
     <div
       className={`${
@@ -996,6 +1009,582 @@ export function OnlineManualGameArena() {
         <div className="absolute top-3 left-3 w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee] pointer-events-none" />
         <div className="absolute top-3 right-3 w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee] pointer-events-none" />
 
+        {/* =====================================================================
+            MOBILE & TABLET SINGLE-SCREEN GAME COCKPIT (lg:hidden)
+            Fits Header, Scoreboard, Objective+Milestone, Active Pipeline Stage,
+            and Player Hand cleanly onto a phone screen without endless scrolling!
+        ===================================================================== */}
+        <div className="lg:hidden flex flex-col">
+          {/* 1. Compact Mobile Top Command & Score Bar */}
+          <div className="px-3 py-2.5 bg-[#02050e]/95 border-b border-cyan-500/25 flex flex-col gap-2">
+            {/* Row A: Brand + Quick Action Icons */}
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <img
+                  src="/logo.png"
+                  alt="AI Quest Shield"
+                  className="w-7 h-7 object-contain shrink-0 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]"
+                />
+                <div className="truncate">
+                  <div className="text-[11px] font-black tracking-[0.14em] uppercase text-cyan-400 truncate">
+                    LIVE ARENA · RULES v1.0
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  onClick={() => setShowRulesModal(true)}
+                  className="px-2 py-1 rounded-lg bg-amber-500/15 border border-amber-400/50 text-amber-200 text-[10px] font-bold uppercase flex items-center gap-1 cursor-pointer"
+                >
+                  <BookOpen className="w-3 h-3" />
+                  Rules
+                </button>
+                <button
+                  onClick={() => startNewGame(startingHandSize, aiCount)}
+                  className="px-2 py-1 rounded-lg bg-cyan-500/20 border border-cyan-400/60 text-cyan-200 text-[10px] font-bold uppercase flex items-center gap-1 cursor-pointer"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  Deal
+                </button>
+                <button
+                  onClick={toggleMusic}
+                  className={`p-1.5 rounded-lg border cursor-pointer ${
+                    musicEnabled
+                      ? "bg-cyan-500/25 border-cyan-400 text-cyan-200"
+                      : "bg-slate-900/80 border-slate-700 text-slate-400"
+                  }`}
+                  title="Toggle Music"
+                >
+                  <Music className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={toggleSound}
+                  className={`p-1.5 rounded-lg border cursor-pointer ${
+                    soundEnabled
+                      ? "bg-slate-900/90 border-cyan-500/40 text-cyan-300"
+                      : "bg-slate-900/80 border-slate-700 text-slate-500"
+                  }`}
+                  title="Toggle Sound Effects"
+                >
+                  {soundEnabled ? (
+                    <Volume2 className="w-3.5 h-3.5 text-cyan-400" />
+                  ) : (
+                    <VolumeX className="w-3.5 h-3.5" />
+                  )}
+                </button>
+                <button
+                  onClick={() => setMobileSettingsOpen(!mobileSettingsOpen)}
+                  className={`px-2 py-1 rounded-lg border text-[10px] font-bold uppercase cursor-pointer ${
+                    mobileSettingsOpen
+                      ? "bg-cyan-400 text-slate-950 border-cyan-300"
+                      : "bg-slate-900/80 border-slate-700 text-slate-300"
+                  }`}
+                >
+                  ⚙ Setup
+                </button>
+              </div>
+            </div>
+
+            {/* Collapsible Mobile Setup Drawer (Hand Size, AI Rivals, Hints) */}
+            {mobileSettingsOpen && (
+              <div className="pt-2 border-t border-cyan-500/20 flex flex-wrap items-center justify-between gap-2 text-[10px]">
+                <div className="flex items-center gap-1 bg-slate-900/90 border border-cyan-500/25 rounded-lg px-2 py-1">
+                  <span className="text-slate-400 font-mono uppercase">Hand:</span>
+                  {[4, 5, 6, 7].map((sz) => (
+                    <button
+                      key={sz}
+                      onClick={() => {
+                        setStartingHandSize(sz);
+                        startNewGame(sz, aiCount);
+                      }}
+                      className={`w-5 h-5 rounded font-bold ${
+                        startingHandSize === sz
+                          ? "bg-cyan-400 text-slate-950"
+                          : "text-slate-300"
+                      }`}
+                    >
+                      {sz}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-1 bg-slate-900/90 border border-cyan-500/25 rounded-lg px-2 py-1">
+                  <span className="text-slate-400 font-mono uppercase">AI:</span>
+                  {[1, 2, 3].map((cnt) => (
+                    <button
+                      key={cnt}
+                      onClick={() => {
+                        setAiCount(cnt);
+                        startNewGame(startingHandSize, cnt);
+                      }}
+                      className={`w-5 h-5 rounded font-bold ${
+                        aiCount === cnt
+                          ? "bg-cyan-400 text-slate-950"
+                          : "text-slate-300"
+                      }`}
+                    >
+                      {cnt}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setShowHints(!showHints)}
+                  className={`px-2.5 py-1 rounded-lg border font-bold uppercase ${
+                    showHints
+                      ? "bg-cyan-500/20 border-cyan-400 text-cyan-200"
+                      : "bg-slate-900 border-slate-700 text-slate-400"
+                  }`}
+                >
+                  Hints: {showHints ? "ON" : "OFF"}
+                </button>
+              </div>
+            )}
+
+            {/* Row B: Compact Horizontal Score Pills + Deck & Turn Status */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+              {players.map((p, idx) => {
+                const isTurn = idx === activePlayerIdx && !winner;
+                return (
+                  <div
+                    key={p.id}
+                    className={`flex-1 min-w-[115px] rounded-xl px-2.5 py-1.5 border flex items-center justify-between gap-1.5 ${
+                      isTurn
+                        ? "bg-cyan-950/70 border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.2)]"
+                        : "bg-slate-900/70 border-slate-800"
+                    }`}
+                  >
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span
+                        className={`w-2 h-2 rounded-full shrink-0 ${
+                          isTurn ? "animate-ping" : ""
+                        }`}
+                        style={{ backgroundColor: p.avatarColor }}
+                      />
+                      <span className="text-[10px] font-extrabold uppercase text-white truncate">
+                        {p.isBot ? p.name.replace(" AI", "") : "YOU"}
+                      </span>
+                    </div>
+                    <span className="text-xs font-black text-cyan-300 font-mono shrink-0">
+                      {p.ip} <span className="text-[9px] text-cyan-400">IP</span>
+                    </span>
+                  </div>
+                );
+              })}
+
+              <div className="px-2.5 py-1.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-center shrink-0">
+                <div className="text-[9px] font-mono text-slate-400 uppercase leading-none">
+                  Deck
+                </div>
+                <div className="text-xs font-black text-white font-mono leading-tight">
+                  {deck.length}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. Mobile Challenge Audit or Status Alert */}
+          {pendingAudit && (
+            <div className="mx-2.5 mt-2 p-3 rounded-xl bg-red-950/95 border-2 border-red-500 shadow-lg flex flex-col gap-2">
+              <div className="flex items-center justify-between text-[10px] font-black uppercase text-red-300">
+                <span>🚨 AUDIT WINDOW ({auditCountdown}s)</span>
+                <span>{pendingAudit.card.category}</span>
+              </div>
+              <p className="text-xs text-white">
+                <strong className="text-cyan-300">{pendingAudit.playerName}</strong> played{" "}
+                <strong className="text-amber-300">&ldquo;{pendingAudit.card.name}&rdquo;</strong>
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => commitPendingCard(pendingAudit)}
+                  className="flex-1 py-1.5 rounded-lg bg-slate-800 border border-slate-600 text-slate-200 text-[10px] font-bold uppercase"
+                >
+                  ✓ Allow Move
+                </button>
+                <button
+                  onClick={handlePlayerChallengeAi}
+                  className="flex-1 py-1.5 rounded-lg bg-red-600 border border-red-300 text-white text-[10px] font-black uppercase"
+                >
+                  🚨 CHALLENGE!
+                </button>
+              </div>
+            </div>
+          )}
+
+          {bannerAlert && !pendingAudit && (
+            <div
+              className={`mx-2.5 mt-2 px-3 py-1.5 rounded-xl border text-[11px] font-bold flex items-center justify-between gap-2 ${
+                bannerAlert.type === "error"
+                  ? "bg-red-950/90 border-red-500/70 text-red-200"
+                  : bannerAlert.type === "warning"
+                  ? "bg-amber-950/90 border-amber-500/70 text-amber-200"
+                  : "bg-emerald-950/90 border-emerald-500/70 text-emerald-200"
+              }`}
+            >
+              <span className="truncate">{bannerAlert.text}</span>
+              <button onClick={() => setBannerAlert(null)} className="text-xs">
+                ✕
+              </button>
+            </div>
+          )}
+
+          {/* 3. Compact Side-by-Side Objective & Paired Milestone Bar */}
+          <div className="px-2.5 pt-2.5">
+            <div className="rounded-xl bg-[#060e24]/90 border border-cyan-500/30 p-2.5">
+              <div className="grid grid-cols-2 gap-2">
+                {/* Active Objective */}
+                {sharedObjective && (
+                  <div className="flex items-center gap-2 min-w-0 pr-1 border-r border-cyan-500/20">
+                    <div
+                      onClick={() => setInspectingCard(sharedObjective)}
+                      className="w-[46px] h-[64px] shrink-0 rounded-lg overflow-hidden border border-amber-400/60 shadow cursor-pointer"
+                    >
+                      <DigitalEngineerCardFace card={sharedObjective} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[9px] font-black uppercase text-amber-400">
+                          Objective
+                        </span>
+                        {headStageIdx === -1 && (
+                          <button
+                            onClick={cycleObjective}
+                            className="text-[9px] font-mono text-cyan-300 underline"
+                          >
+                            Swap
+                          </button>
+                        )}
+                      </div>
+                      <div
+                        onClick={() => setInspectingCard(sharedObjective)}
+                        className="text-[11px] font-bold text-white uppercase leading-tight line-clamp-2 mt-0.5 cursor-pointer"
+                      >
+                        {sharedObjective.name}
+                      </div>
+                      <button
+                        onClick={() => setInspectingCard(sharedObjective)}
+                        className="text-[9px] font-mono text-cyan-400 mt-0.5 flex items-center gap-0.5"
+                      >
+                        <Eye className="w-2.5 h-2.5" /> Tap to Zoom
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Paired Milestone */}
+                {pairedMilestone && (
+                  <div
+                    onClick={() => setInspectingCard(pairedMilestone)}
+                    className="flex items-center gap-2 min-w-0 pl-1 cursor-pointer"
+                  >
+                    <div
+                      className={`w-[46px] h-[64px] shrink-0 rounded-lg overflow-hidden border shadow ${
+                        milestoneUnlocked
+                          ? "border-emerald-400"
+                          : "border-rose-500/50 opacity-90"
+                      }`}
+                    >
+                      <DigitalEngineerCardFace card={pairedMilestone} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[9px] font-black uppercase text-rose-400">
+                          Milestone
+                        </span>
+                        <span className="text-[9px] font-mono font-bold text-amber-300">
+                          +{ENGINEER_CATEGORY_IP.MILESTONE} IP
+                        </span>
+                      </div>
+                      <div className="text-[11px] font-bold text-white uppercase leading-tight line-clamp-2 mt-0.5">
+                        {pairedMilestone.name}
+                      </div>
+                      <div className="text-[9px] font-mono text-amber-300/90 mt-0.5 truncate">
+                        {milestoneUnlocked ? "✓ Unlocked!" : "🔒 At Stage 7"}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Collapsible Valid Datasets & Models Pill */}
+              {sharedObjective && getObjectiveCompatibility(sharedObjective.name) && (
+                <div className="mt-2 pt-1.5 border-t border-cyan-500/20">
+                  <button
+                    onClick={() => setMobileShowCompat(!mobileShowCompat)}
+                    className="w-full flex items-center justify-between text-[10px] font-mono text-cyan-300 font-bold"
+                  >
+                    <span>
+                      ✓ Valid Stage 1 Datasets &amp; Stage 4 Models for {sharedObjective.name}
+                    </span>
+                    <span className="text-xs">{mobileShowCompat ? "▴ Hide" : "▾ View"}</span>
+                  </button>
+                  {mobileShowCompat && (
+                    <div className="mt-1.5 p-2 rounded-lg bg-[#040a1a] border border-cyan-500/25 text-[10px] space-y-1 text-left">
+                      <div>
+                        <strong className="text-cyan-300">Stage 1 Datasets: </strong>
+                        <span className="text-slate-300">
+                          {getObjectiveCompatibility(sharedObjective.name)?.datasets.join(" · ")}
+                        </span>
+                      </div>
+                      <div>
+                        <strong className="text-purple-300">Stage 4 Models: </strong>
+                        <span className="text-slate-300">
+                          {getObjectiveCompatibility(sharedObjective.name)?.models.join(" · ")}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 4. Compact Horizontal Swipeable 7-Stage Pipeline Track */}
+          <div className="px-2.5 pt-2.5">
+            <div className="flex items-center justify-between mb-1.5 px-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-white flex items-center gap-1">
+                <Cpu className="w-3 h-3 text-cyan-400" />
+                7-Stage Pipeline (Swipe ↔)
+              </span>
+              <span className="text-[10px] font-mono font-bold text-cyan-300 bg-cyan-500/15 border border-cyan-400/40 px-2 py-0.5 rounded-md">
+                Stage {headStageIdx === -1 ? 1 : headStageIdx + 1}/7 Open
+              </span>
+            </div>
+
+            <div className="flex items-stretch gap-2 overflow-x-auto pb-1.5 pt-0.5 snap-x snap-mandatory custom-scrollbar">
+              {PIPELINE_STAGES.map((stage, idx) => {
+                const cardsInStage = pipeline[stage.slotKey];
+                const isCurrentOpen =
+                  (headStageIdx === -1 && idx === 0) || idx === headStageIdx;
+                const isNextAdvance = headStageIdx !== -1 && idx === headStageIdx + 1;
+                const isClosed = headStageIdx > idx;
+                const topCard =
+                  cardsInStage.length > 0
+                    ? cardsInStage[cardsInStage.length - 1]
+                    : null;
+                const stageIp = STAGE_IP_MAP[stage.category] || 10;
+
+                return (
+                  <div
+                    key={stage.slotKey}
+                    ref={(el) => {
+                      mobileStageRefs.current[idx] = el;
+                    }}
+                    onClick={() => {
+                      if (cardsInStage.length > 0) {
+                        setSelectedStageModal(stage.slotKey);
+                      }
+                    }}
+                    className={`snap-center shrink-0 w-[124px] rounded-xl p-2 border flex flex-col justify-between transition-all ${
+                      isCurrentOpen
+                        ? "bg-cyan-950/55 border-2 border-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.25)]"
+                        : isNextAdvance
+                        ? "bg-emerald-950/35 border-2 border-dashed border-emerald-400/75"
+                        : isClosed
+                        ? "bg-slate-900/75 border-slate-700/70 opacity-85"
+                        : "bg-slate-950/60 border-slate-800/80 opacity-60"
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between text-[9px] font-mono mb-0.5">
+                        <span className="font-black px-1 py-0.2 rounded bg-slate-900 text-cyan-300 border border-cyan-500/30">
+                          0{idx + 1}
+                        </span>
+                        <span className="font-bold text-amber-300">+{stageIp} IP</span>
+                      </div>
+                      <div className="text-[9px] font-black uppercase text-white leading-tight truncate">
+                        {stage.label}
+                      </div>
+                    </div>
+
+                    <div className="my-1.5 flex items-center justify-center">
+                      {topCard ? (
+                        <div className="relative w-[78px] h-[108px]">
+                          <div className="w-full h-full rounded-lg overflow-hidden shadow border border-white/20">
+                            <DigitalEngineerCardFace card={topCard} />
+                          </div>
+                          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 bg-slate-950 border border-cyan-400 text-cyan-200 text-[8px] font-mono font-bold px-1.5 py-0.2 rounded-full whitespace-nowrap">
+                            {cardsInStage.length} {cardsInStage.length === 1 ? "Card" : "Cards"}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-[74px] h-[104px] rounded-lg border border-dashed border-slate-700 flex items-center justify-center p-1.5 text-center">
+                          <span className="text-[8px] font-mono uppercase text-slate-400 leading-tight">
+                            {isCurrentOpen
+                              ? "Open Stage"
+                              : isNextAdvance
+                              ? "Play to Advance"
+                              : "Locked"}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="text-center">
+                      <span
+                        className={`block w-full py-0.5 rounded text-[8px] font-mono font-bold uppercase ${
+                          isCurrentOpen
+                            ? "bg-cyan-400/20 text-cyan-200 border border-cyan-400/40"
+                            : isNextAdvance
+                            ? "bg-emerald-400/20 text-emerald-200 border border-emerald-400/40"
+                            : isClosed
+                            ? "bg-slate-800 text-slate-400"
+                            : "bg-slate-900 text-slate-500"
+                        }`}
+                      >
+                        {isCurrentOpen
+                          ? "● OPEN"
+                          : isNextAdvance
+                          ? "→ NEXT"
+                          : isClosed
+                          ? "✓ DONE"
+                          : "LOCKED"}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 5. Docked Mobile Player Hand & Turn Action Bar */}
+          <div className="mt-2 px-2.5 py-2.5 bg-[#020612]/95 border-t border-cyan-500/30">
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <div className="min-w-0">
+                <div className="text-[11px] font-black uppercase tracking-wider text-cyan-300 flex items-center gap-1.5">
+                  <span>YOUR HAND ({humanPlayer?.hand.length || 0})</span>
+                  {isHumanTurn && (
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-cyan-400/20 border border-cyan-400 text-cyan-200">
+                      {validHandCount} Valid
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <button
+                onClick={handleHumanDrawAndEndTurn}
+                disabled={!isHumanTurn}
+                className={`px-3.5 py-2 rounded-xl font-black text-[10px] uppercase tracking-wider flex items-center gap-1.5 shrink-0 transition-all ${
+                  isHumanTurn
+                    ? validHandCount === 0
+                      ? "bg-gradient-to-r from-amber-400 to-cyan-400 text-slate-950 shadow-[0_0_18px_rgba(34,211,238,0.6)] animate-pulse"
+                      : "bg-gradient-to-r from-cyan-400 to-sky-400 text-slate-950 shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+                    : "bg-slate-800 border border-slate-700 text-slate-500"
+                }`}
+              >
+                <span>
+                  {cardsPlayedThisTurn > 0
+                    ? `Draw & End (${cardsPlayedThisTurn})`
+                    : "Draw 1 & End Turn"}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Compact Swipeable Hand Cards on Mobile */}
+            <div className="flex items-center gap-2.5 overflow-x-auto pb-1.5 pt-0.5 custom-scrollbar">
+              {humanPlayer?.hand.map((card) => {
+                const valid = isValidPipelinePlay(card, pipeline);
+                const dup = isDuplicateInPipeline(pipeline, card);
+                const stageOk = isStageProgressionValid(card, pipeline);
+                const domainOk = isCardCompatibleWithObjective(card, sharedObjective);
+                const stIdx = getPipelineStageIndex(card.category);
+                const isAdvance = headStageIdx !== -1 && stIdx === headStageIdx + 1;
+
+                return (
+                  <div
+                    key={card.id}
+                    className={`relative shrink-0 flex flex-col items-center rounded-xl p-1.5 border transition-all ${
+                      showHints && valid
+                        ? "bg-cyan-950/55 border-2 border-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.3)]"
+                        : "bg-slate-900/75 border-slate-700/80"
+                    }`}
+                  >
+                    <div className="w-full flex items-center justify-between gap-1 mb-1 px-0.5">
+                      {showHints ? (
+                        valid ? (
+                          <span className="text-[8px] font-mono font-black uppercase px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+                            {isAdvance ? "✓ Advance" : "✓ Valid"}
+                          </span>
+                        ) : dup ? (
+                          <span className="text-[8px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-red-500/20 text-red-300">
+                            Dup
+                          </span>
+                        ) : !domainOk ? (
+                          <span
+                            className={`text-[8px] font-mono font-bold uppercase px-1.5 py-0.5 rounded ${
+                              stageOk
+                                ? "bg-amber-500/20 text-amber-300"
+                                : "bg-slate-800 text-amber-300/80"
+                            }`}
+                          >
+                            ⚠ Domain
+                          </span>
+                        ) : (
+                          <span className="text-[8px] font-mono uppercase px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">
+                            Stg 0{stIdx + 1}
+                          </span>
+                        )
+                      ) : (
+                        <span className="text-[8px] font-mono uppercase px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">
+                          Stg 0{stIdx + 1}
+                        </span>
+                      )}
+
+                      <button
+                        onClick={() => setInspectingCard(card)}
+                        className="text-[8px] font-mono text-cyan-400 px-1 py-0.5 rounded bg-slate-950/80"
+                      >
+                        Zoom
+                      </button>
+                    </div>
+
+                    <div
+                      onClick={() => {
+                        if (isHumanTurn) {
+                          handleHumanPlayCard(card);
+                        } else {
+                          setInspectingCard(card);
+                        }
+                      }}
+                      className="w-[114px] h-[160px] rounded-lg overflow-hidden shadow-lg cursor-pointer"
+                    >
+                      <DigitalEngineerCardFace card={card} />
+                    </div>
+
+                    <button
+                      onClick={() => handleHumanPlayCard(card)}
+                      disabled={!isHumanTurn}
+                      className={`mt-1.5 w-full py-1 rounded-lg font-black text-[9px] uppercase tracking-wider ${
+                        !isHumanTurn
+                          ? "bg-slate-800 text-slate-500"
+                          : showHints && valid
+                          ? "bg-cyan-400 text-slate-950"
+                          : "bg-slate-800 text-slate-300 border border-slate-700"
+                      }`}
+                    >
+                      {showHints && !valid ? "Risk Play" : `Play (+${card.ipValue} IP)`}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Compact 1-Line Mobile Log */}
+            <div className="mt-1.5 pt-1.5 border-t border-cyan-500/20 flex items-center justify-between gap-2 text-[10px] font-mono text-slate-400">
+              <div className="truncate">
+                <span className="text-cyan-400 font-bold mr-1">[LOG]</span>
+                <span>{logs[logs.length - 1]}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* =====================================================================
+            DESKTOP TABLETOP VIEW (hidden lg:block — 100% UNCHANGED)
+        ===================================================================== */}
+        <div className="hidden lg:block">
         {/* TOP GAME COMMAND HEADER */}
         <div className="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-7 py-3.5 bg-[#02050e]/90 border-b border-cyan-500/25">
           <div className="flex items-center gap-3">
@@ -1710,6 +2299,7 @@ export function OnlineManualGameArena() {
               Audited Moves: <strong className="text-cyan-300">{moveHistory.length}</strong>
             </span>
           </div>
+        </div>
         </div>
       </div>
 
