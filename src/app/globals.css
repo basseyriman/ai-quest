@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "../../node_modules/tailwindcss/index.css" source(none);
+@source "../app";
+@source "../components";
+@source "../lib";
 
 :root {
   --foreground-rgb: 255, 255, 255;
@@ -10,9 +11,9 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: black;
+  background: #030712;
   min-height: 100vh;
-  font-family: var(--font-rajdhani), sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
 }
 
@@ -22,7 +23,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-orbitron), sans-serif;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Fix for Webkit Autofill overriding dark mode text colors */

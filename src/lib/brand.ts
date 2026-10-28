@@ -1,5 +1,5 @@
 /** Shared brand URLs — safe for server & client (no "use client"). */
-export const AI_QUEST_LANDING_URL = "https://rimanstech.com/ai-quest";
+export const AI_QUEST_LANDING_URL = "https://www.aiquestgame.com";
 export const RIMANSTECH_URL = "https://rimanstech.com";
 
 /** Official company name — RimansTech (not RimanTech). */

@@ -40,7 +40,7 @@ const dev = process.env.NODE_ENV !== "production";
 const hostname = "localhost";
 const port = 3001;
 
-const app = next({ dev, hostname, port });
+const app = next({ dev, hostname, port, dir: __dirname });
 const handle = app.getRequestHandler();
 
 const rooms: Record<string, EngineerGameState> = {};

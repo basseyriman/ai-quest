@@ -26,6 +26,281 @@ export const TIE_BREAK_STAGE_INDICES = [
   6, 5, 4, 3, 2, 1, 0,
 ] as const;
 
+/**
+ * Domain compatibility map for each of the 15 System Objectives.
+ * Ensures that Data Collection datasets and Model Selection architectures
+ * are logically and scientifically valid for the active System Objective.
+ */
+export const OBJECTIVE_COMPATIBILITY_MAP: Record<
+  string,
+  {
+    datasets: string[];
+    models: string[];
+    disallowFeatures?: string[];
+  }
+> = {
+  "Fraud Detection System": {
+    datasets: [
+      "Financial Transactions Dataset",
+      "Credit History Dataset",
+      "E-Commerce Purchases Dataset",
+      "User Behaviour Dataset",
+      "Cybersecurity Logs Dataset",
+    ],
+    models: [
+      "XGBoost",
+      "LightGBM",
+      "Random Forest",
+      "Logistic Regression",
+      "KNN",
+    ],
+  },
+  "Recommendation Engine": {
+    datasets: [
+      "User Behaviour Dataset",
+      "E-Commerce Purchases Dataset",
+      "Customer Reviews Dataset",
+      "Social Media Posts Dataset",
+    ],
+    models: [
+      "KNN",
+      "Random Forest",
+      "LightGBM",
+      "XGBoost",
+      "Transformer",
+    ],
+  },
+  "Healthcare Diagnosis AI": {
+    datasets: [
+      "MRI Dataset",
+      "Medical Records Dataset",
+      "Genomic Dataset",
+      "Camera Image Dataset",
+    ],
+    models: [
+      "CNN",
+      "Vision Transformer (ViT)",
+      "Random Forest",
+      "XGBoost",
+      "Logistic Regression",
+    ],
+  },
+  "Autonomous Navigation System": {
+    datasets: [
+      "Camera Image Dataset",
+      "LiDAR Dataset",
+      "GPS Dataset",
+      "Video Frame Dataset",
+      "Traffic Sensor Dataset",
+      "IoT Sensor Dataset",
+      "Satellite Imagery Dataset",
+    ],
+    models: [
+      "CNN",
+      "Vision Transformer (ViT)",
+      "Reinforcement Learning Agent",
+      "LSTM",
+    ],
+    disallowFeatures: ["Text Vectorization"],
+  },
+  "Climate Forecasting Model": {
+    datasets: [
+      "Climate Records Dataset",
+      "Satellite Imagery Dataset",
+      "IoT Sensor Dataset",
+      "Energy Consumption Dataset",
+    ],
+    models: [
+      "LSTM",
+      "Random Forest",
+      "XGBoost",
+      "LightGBM",
+      "CNN",
+    ],
+    disallowFeatures: ["Text Vectorization"],
+  },
+  "Social Media Moderation AI": {
+    datasets: [
+      "Social Media Posts Dataset",
+      "Text Corpus Dataset",
+      "Customer Reviews Dataset",
+      "Video Frame Dataset",
+      "Camera Image Dataset",
+      "User Behaviour Dataset",
+    ],
+    models: [
+      "BERT",
+      "Transformer",
+      "CNN",
+      "Vision Transformer (ViT)",
+      "Logistic Regression",
+    ],
+  },
+  "Credit Risk Assessment AI": {
+    datasets: [
+      "Credit History Dataset",
+      "Financial Transactions Dataset",
+      "E-Commerce Purchases Dataset",
+      "User Behaviour Dataset",
+    ],
+    models: [
+      "Logistic Regression",
+      "XGBoost",
+      "Random Forest",
+      "LightGBM",
+    ],
+  },
+  "Voice Assistant AI": {
+    datasets: [
+      "Speech Corpus Dataset",
+      "Text Corpus Dataset",
+      "Customer Support Conversations Dataset",
+    ],
+    models: [
+      "Transformer",
+      "BERT",
+      "LSTM",
+    ],
+  },
+  "Cybersecurity Threat Detection": {
+    datasets: [
+      "Cybersecurity Logs Dataset",
+      "Network Traffic Dataset",
+      "User Behaviour Dataset",
+      "Financial Transactions Dataset",
+    ],
+    models: [
+      "XGBoost",
+      "Random Forest",
+      "LightGBM",
+      "LSTM",
+      "Logistic Regression",
+    ],
+  },
+  "Smart Energy Optimization System": {
+    datasets: [
+      "Energy Consumption Dataset",
+      "IoT Sensor Dataset",
+      "Climate Records Dataset",
+    ],
+    models: [
+      "Reinforcement Learning Agent",
+      "LSTM",
+      "XGBoost",
+      "LightGBM",
+      "Random Forest",
+    ],
+    disallowFeatures: ["Text Vectorization"],
+  },
+  "E-Commerce Pricing AI": {
+    datasets: [
+      "E-Commerce Purchases Dataset",
+      "User Behaviour Dataset",
+      "Customer Reviews Dataset",
+      "Financial Transactions Dataset",
+    ],
+    models: [
+      "Random Forest",
+      "LightGBM",
+      "XGBoost",
+      "Logistic Regression",
+      "LSTM",
+      "Reinforcement Learning Agent",
+    ],
+  },
+  "Facial Recognition System": {
+    datasets: [
+      "Facial Image Dataset",
+      "Camera Image Dataset",
+      "Video Frame Dataset",
+    ],
+    models: [
+      "CNN",
+      "Vision Transformer (ViT)",
+    ],
+    disallowFeatures: ["Text Vectorization"],
+  },
+  "Customer Support Chatbot": {
+    datasets: [
+      "Customer Support Conversations Dataset",
+      "Support Tickets Dataset",
+      "Text Corpus Dataset",
+      "Customer Reviews Dataset",
+      "Speech Corpus Dataset",
+    ],
+    models: [
+      "Transformer",
+      "BERT",
+      "Logistic Regression",
+      "LSTM",
+    ],
+  },
+  "Traffic Flow Prediction System": {
+    datasets: [
+      "Traffic Sensor Dataset",
+      "GPS Dataset",
+      "Camera Image Dataset",
+      "Video Frame Dataset",
+      "IoT Sensor Dataset",
+      "LiDAR Dataset",
+    ],
+    models: [
+      "LSTM",
+      "XGBoost",
+      "LightGBM",
+      "Random Forest",
+      "CNN",
+    ],
+    disallowFeatures: ["Text Vectorization"],
+  },
+  "AI-Powered Recruitment System": {
+    datasets: [
+      "Candidate CV Dataset",
+      "Interview Feedback Dataset",
+      "Text Corpus Dataset",
+    ],
+    models: [
+      "Random Forest",
+      "BERT",
+      "Transformer",
+      "Logistic Regression",
+      "XGBoost",
+      "KNN",
+    ],
+  },
+};
+
+export function getObjectiveCompatibility(objectiveName?: string | null) {
+  if (!objectiveName) return null;
+  return OBJECTIVE_COMPATIBILITY_MAP[objectiveName] || null;
+}
+
+/**
+ * Checks whether an EngineerCard is logically/domain-compatible with the active System Objective.
+ */
+export function isCardCompatibleWithObjective(
+  card: EngineerCard,
+  objective?: EngineerCard | null
+): boolean {
+  if (!objective) return true;
+  const rules = OBJECTIVE_COMPATIBILITY_MAP[objective.name];
+  if (!rules) return true;
+
+  if (card.category === "DATA COLLECTION") {
+    return rules.datasets.includes(card.name);
+  }
+
+  if (card.category === "MODEL SELECTION") {
+    return rules.models.includes(card.name);
+  }
+
+  if (card.category === "FEATURE ENGINEERING" && rules.disallowFeatures) {
+    return !rules.disallowFeatures.includes(card.name);
+  }
+
+  return true;
+}
+
 export function createEmptyPipeline(): EngineerPipeline {
   return {
     objective: null,
@@ -76,7 +351,26 @@ export function isDuplicateInPipeline(
   return getAllPipelineCards(pipeline).some((c) => c.name === card.name);
 }
 
-/** Official v1.0: play in current open stage or advance one stage; no duplicates. */
+/**
+ * Checks whether a card belongs to the current open stage or advances one sequential stage.
+ */
+export function isStageProgressionValid(
+  card: EngineerCard,
+  pipeline: EngineerPipeline
+): boolean {
+  const stageIndex = getPipelineStageIndex(card.category);
+  if (stageIndex === -1) return false;
+  const head = getPipelineHeadStageIndex(pipeline);
+  if (head === -1) return stageIndex === 0;
+  return stageIndex === head || stageIndex === head + 1;
+}
+
+/**
+ * Official v1.0:
+ * 1. Must be in current open stage or advance one stage
+ * 2. Must not be a duplicate card already in the pipeline
+ * 3. Must be domain-compatible with the active System Objective (e.g. E-Commerce Pricing AI requires E-Commerce / User / Review / Financial datasets, not Medical or Traffic datasets!)
+ */
 export function isValidPipelinePlay(
   card: EngineerCard,
   pipeline: EngineerPipeline
@@ -84,10 +378,9 @@ export function isValidPipelinePlay(
   const stageIndex = getPipelineStageIndex(card.category);
   if (stageIndex === -1) return false;
   if (isDuplicateInPipeline(pipeline, card)) return false;
-
-  const head = getPipelineHeadStageIndex(pipeline);
-  if (head === -1) return stageIndex === 0;
-  return stageIndex === head || stageIndex === head + 1;
+  if (!isStageProgressionValid(card, pipeline)) return false;
+  if (!isCardCompatibleWithObjective(card, pipeline.objective)) return false;
+  return true;
 }
 
 export function isDeploymentComplete(pipeline: EngineerPipeline): boolean {
@@ -163,7 +456,7 @@ export function resolveWinner(gameState: EngineerGameState): EngineerGameState {
         bestTieScore = score;
         tieWinnerIds = [id];
       } else if (score === bestTieScore) {
-        tieWinnerIds.push(id);
+        tieWinnerIds = [id];
       }
     }
 
